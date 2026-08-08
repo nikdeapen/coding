@@ -1,0 +1,8 @@
+# Mac
+.DS_Store
+
+# JetBrains
+.idea/*
+!.idea/dictionaries/
+!.idea/codeStyles/
+*.iml
