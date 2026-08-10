@@ -13,7 +13,8 @@ paths:
 
 ## File Layout
 
-- `mod.rs` & `lib.rs` files hold only `mod` declarations & re-exports, never code.
+- `mod.rs` & `lib.rs` files hold only `mod` declarations & re-exports, never code. Mods with an associated re-export
+  go in a separate block before the mods without one.
 - Functions & constants belong in impl blocks, even when they don't use `self`.
 - One impl block per concern (`//! Construction`, `//! Validation`, `//! Properties`, `//! Display`, ...), with the
   section comment inside the block at the top:
@@ -31,6 +32,7 @@ paths:
 ## Types
 
 - Value types derive `Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash, Debug` (that order) when possible.
+- Types whose `Display` round-trips through parsing impl `Debug` as `Display` & drop the `Debug` derive.
 - Iterator structs derive only `Copy, Clone, Debug`.
 - Put `#[must_use]` on value types (above the derive) & keep `#![warn(clippy::must_use_candidate)]` satisfied.
 - Re-export public dependencies whose types appear in the API. (e.g. `pub use address;`)
@@ -38,6 +40,7 @@ paths:
 ## Functions
 
 - Impl-block functions on `Copy` types take owned `self`, not `&self`. Trait signatures are exempt.
+- Refer to the implemented type as `Self` in impl bodies: `Self::new(...)`, `Self::V4(...)`, `Self { ... }`.
 - Unchecked constructors end in `_unchecked`, validate with `debug_assert!`, & are marked `unsafe` to protect
   struct invariants even when breaking them is not undefined behavior.
 - Annotate local variable types explicitly where the type is nameable: `let scheme: Scheme = ...`.
@@ -51,7 +54,6 @@ paths:
 - One-line docs for constructors & accessors. No "Returns ..." lines that restate the signature.
 - Only add `# Safety` / `# Panics` sections when they carry a real constraint, stated in one plain sentence.
 - `# Safety` sections go only on `unsafe fn` docs; never add `// SAFETY:` comments on unsafe blocks.
-- Use '&' rather than 'and' in doc prose.
 
 ## Errors
 
