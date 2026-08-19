@@ -5,4 +5,3 @@
 - Don't write tests unless explicitly asked. Tests may be written as an intermediate step to check work; delete them
   before finishing unless asked to keep them.
 - Don't write or suggest pedantic tests; code that just delegates (e.g. Debug forwarding to Display) needs no tests.
-- Never commit or modify git state. When git operations are needed, give the commands instead of running them.
